@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return "the changes are seen damnn! this is a change from remote repo "
+    return "the changes are seen damnn! "
 
 if __name__ == '__main__':
     app.run(debug=True)
