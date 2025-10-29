@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>URL Manager</h1>
+    
+    <form action="/add" method="POST">
+        <input type="url" name="url" placeholder="https://example.com" required>
+        <button type="submit">Add URL</button>
+    </form>
+
+    <h2>Saved URLs</h2>
+    
+    {% if urls %}
+        {% for item in urls %}
+        <div class="url-item">
+            <div class="url-title">{{ item.title }}</div>
+            <a href="{{ item.url }}" target="_blank">{{ item.url }}</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No URLs added yet.</p>
+    {% endif %}
+</body>
+</html>

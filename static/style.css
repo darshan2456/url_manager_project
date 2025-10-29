@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+form {
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+input[type="url"] {
+    width: 70%;
+    padding: 8px;
+    font-size: 16px;
+}
+
+button {
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.url-item {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-left: 4px solid #007bff;
+}
+
+.url-title {
+    font-weight: bold;
+    color: #333;
+}
+
+.url-link {
+    color: #007bff;
+    text-decoration: none;
+}
