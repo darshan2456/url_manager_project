@@ -18,7 +18,13 @@
         {% for item in urls %}
         <div class="url-item">
             <div class="url-title">{{ item.title }}</div>
-            <a href="{{ item.url }}" target="_blank">{{ item.url }}</a>
+            <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+            <br>
+            <a href="/delete/{{ loop.index0 }}" 
+               class="delete-btn" 
+               onclick="return confirm('Are you sure you want to delete this URL?')">
+               Delete
+            </a>
         </div>
         {% endfor %}
     {% else %}

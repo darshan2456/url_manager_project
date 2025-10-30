@@ -32,19 +32,47 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    background: #0056b3;
+}
+
 .url-item {
     background: white;
     padding: 15px;
     margin: 10px 0;
     border-left: 4px solid #007bff;
+    position: relative;
 }
 
 .url-title {
     font-weight: bold;
     color: #333;
+    margin-bottom: 5px;
 }
 
 .url-link {
     color: #007bff;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.url-link:hover {
+    text-decoration: underline;
+}
+
+.delete-btn {
+    color: #dc3545;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 8px;
+    display: inline-block;
+    padding: 4px 8px;
+    border: 1px solid #dc3545;
+    border-radius: 3px;
+}
+
+.delete-btn:hover {
+    background: #dc3545;
+    color: white;
     text-decoration: none;
 }

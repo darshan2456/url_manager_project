@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -27,19 +27,22 @@ def save_urls(urls_list):
 # Load existing URLs when app starts
 urls = load_urls()
 
-
-
 @app.route('/')
 def index():
     return render_template('index.html', urls=urls)
 
 @app.route('/add', methods=['POST'])
 def add_url():
+    global urls
+    
     url = request.form['url']
     
     # Simple scraping - just get title for now
     try:
-        response = requests.get(url, timeout=5)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
+        response = requests.get(url, timeout=5, headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
         title = soup.find('title')
         title_text = title.text.strip() if title else "No title found"
@@ -52,10 +55,21 @@ def add_url():
         'title': title_text
     })
     
+    # Save to JSON file
     save_urls(urls)
     
-    # Go back to homepage which will show updated list
-    return render_template('index.html', urls=urls)
+    # Redirect to homepage (POST-Redirect-GET pattern)
+    return redirect('/')
+
+@app.route('/delete/<int:url_index>')
+def delete_url(url_index):
+    global urls
+    # Check if index is valid
+    if 0 <= url_index < len(urls):
+        urls.pop(url_index)
+        save_urls(urls)  # Update JSON file
+    # Redirect to homepage (POST-Redirect-GET pattern)
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
