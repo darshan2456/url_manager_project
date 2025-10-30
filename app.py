@@ -1,11 +1,33 @@
 from flask import Flask, render_template, request
 import requests
 from bs4 import BeautifulSoup
+import json
+import os
 
 app = Flask(__name__)
 
-# Temporary storage (we'll replace with database later)
-urls = []
+# File to store URLs
+URLS_FILE = 'urls.json'
+
+def load_urls():
+    """Load URLs from JSON file"""
+    if os.path.exists(URLS_FILE):
+        try:
+            with open(URLS_FILE, 'r') as f:
+                return json.load(f)
+        except:
+            return []
+    return []
+
+def save_urls(urls_list):
+    """Save URLs to JSON file"""
+    with open(URLS_FILE, 'w') as f:
+        json.dump(urls_list, f, indent=2)
+
+# Load existing URLs when app starts
+urls = load_urls()
+
+
 
 @app.route('/')
 def index():
@@ -29,6 +51,8 @@ def add_url():
         'url': url,
         'title': title_text
     })
+    
+    save_urls(urls)
     
     # Go back to homepage which will show updated list
     return render_template('index.html', urls=urls)
