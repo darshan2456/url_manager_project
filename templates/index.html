@@ -25,10 +25,28 @@
                onclick="return confirm('Are you sure you want to delete this URL?')">
                Delete
             </a>
+            <a href="/archive/{{ loop.index0 }}" class="archive-btn"
+			   onclick="return confirm('Are you sure you want to archive this URL?')">Archive</a>
         </div>
         {% endfor %}
     {% else %}
         <p>No URLs added yet.</p>
+    {% endif %}
+
+    <h2>Archived URLs</h2>
+    
+    {% if archived_urls %}
+        {% for item in archived_urls %}
+        <div class="url-item archived">
+            <div class="url-title">{{ item.title }}</div>
+            <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+            <br>
+            <a href="/unarchive/{{ loop.index0 }}" class="unarchive-btn"
+			   onclick="return confirm('Are you sure you want to unarchive this URL?')">Unarchive</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No archived URLs.</p>
     {% endif %}
 </body>
 </html>

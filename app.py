@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import validators
 
 app = Flask(__name__)
 
@@ -14,22 +15,27 @@ def load_urls():
     if os.path.exists(URLS_FILE):
         try:
             with open(URLS_FILE, 'r') as f:
-                return json.load(f)
+                data = json.load(f)
+                return data.get('active', []), data.get('archived', [])
         except:
-            return []
-    return []
+            return [], []
+    return [], []
 
-def save_urls(urls_list):
+def save_urls(active_list, archived_list):
     """Save URLs to JSON file"""
+    data = {
+        'active': active_list,
+        'archived': archived_list
+    }
     with open(URLS_FILE, 'w') as f:
-        json.dump(urls_list, f, indent=2)
+        json.dump(data, f, indent=2)
 
 # Load existing URLs when app starts
-urls = load_urls()
+urls, archived_urls = load_urls()
 
 @app.route('/')
 def index():
-    return render_template('index.html', urls=urls)
+    return render_template('index.html', urls=urls, archived_urls=archived_urls)
 
 @app.route('/add', methods=['POST'])
 def add_url():
@@ -37,8 +43,15 @@ def add_url():
     
     url = request.form['url']
     
+    if validators.url(url):
+        pass
+    else:
+        error_message="page does not exist"
+        return redirect('/')
+            
     # Simple scraping - just get title for now
     try:
+        
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
@@ -56,10 +69,11 @@ def add_url():
     })
     
     # Save to JSON file
-    save_urls(urls)
+    save_urls(urls, archived_urls)
     
-    # Redirect to homepage (POST-Redirect-GET pattern)
+    # Redirect to homepage
     return redirect('/')
+
 
 @app.route('/delete/<int:url_index>')
 def delete_url(url_index):
@@ -67,8 +81,27 @@ def delete_url(url_index):
     # Check if index is valid
     if 0 <= url_index < len(urls):
         urls.pop(url_index)
-        save_urls(urls)  # Update JSON file
-    # Redirect to homepage (POST-Redirect-GET pattern)
+        save_urls(urls, archived_urls)
+    return redirect('/')
+
+@app.route('/archive/<int:url_index>')
+def archive_url(url_index):
+    global urls, archived_urls
+    if 0 <= url_index < len(urls):
+        # Move from urls to archived_urls
+        archived_url = urls.pop(url_index)
+        archived_urls.append(archived_url)
+        save_urls(urls, archived_urls)
+    return redirect('/')
+
+@app.route('/unarchive/<int:url_index>')
+def unarchive_url(url_index):
+    global urls, archived_urls
+    if 0 <= url_index < len(archived_urls):
+        # Move from archived_urls back to urls
+        unarchived_url = archived_urls.pop(url_index)
+        urls.append(unarchived_url)
+        save_urls(urls, archived_urls)
     return redirect('/')
 
 if __name__ == '__main__':
