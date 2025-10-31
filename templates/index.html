@@ -41,8 +41,7 @@
             <div class="url-title">{{ item.title }}</div>
             <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
             <br>
-            <a href="/unarchive/{{ loop.index0 }}" class="unarchive-btn"
-			   onclick="return confirm('Are you sure you want to unarchive this URL?')">Unarchive</a>
+            <a href="/unarchive/{{ loop.index0 }}" class="unarchive-btn">Unarchive</a>
         </div>
         {% endfor %}
     {% else %}
