@@ -96,7 +96,7 @@ button:hover {
 }
 
 .archived {
-    opacity: .7;
+    opacity: 0.6;
     border-left-color: #6c757d;
     background-color: #f8f9fa;
 }
@@ -117,3 +117,76 @@ button:hover {
     color: white;
     text-decoration: none;
 }
+
+/* Tag Selection Styles */
+.tag-selection {
+    margin: 15px 0;
+}
+
+.tag-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.tag-btn {
+    padding: 6px 12px;
+    border: 2px solid;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.tag-btn.selected {
+    color: white;
+}
+
+/* Tag colors */
+.tag-btn.work { border-color: #3B82F6; color: #3B82F6; }
+.tag-btn.work.selected { background: #3B82F6; }
+
+.tag-btn.programming { border-color: #10B981; color: #10B981; }
+.tag-btn.programming.selected { background: #10B981; }
+
+.tag-btn.research { border-color: #8B5CF6; color: #8B5CF6; }
+.tag-btn.research.selected { background: #8B5CF6; }
+
+.tag-btn.personal { border-color: #F59E0B; color: #F59E0B; }
+.tag-btn.personal.selected { background: #F59E0B; }
+
+/* Selected tags display */
+#selected-tags-display {
+    margin-top: 10px;
+    min-height: 30px;
+}
+
+.selected-tag-pill {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-right: 5px;
+    color: white;
+}
+
+/* Tag display in URL items */
+.url-tags {
+    margin-top: 8px;
+}
+
+.tag-pill {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-right: 5px;
+    color: white;
+}
+
+.tag-work { background: #3B82F6; }
+.tag-programming { background: #10B981; }
+.tag-research { background: #8B5CF6; }
+.tag-personal { background: #F59E0B; }

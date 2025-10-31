@@ -3,12 +3,27 @@
 <head>
     <title>URL Manager</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
     <h1>URL Manager</h1>
     
     <form action="/add" method="POST">
         <input type="url" name="url" placeholder="https://example.com" required>
+        
+        <!-- Tag Selection -->
+        <div class="tag-selection">
+            <label>Add Tags:</label>
+            <div class="tag-buttons">
+                <button type="button" class="tag-btn work" data-tag="work">Work</button>
+                <button type="button" class="tag-btn programming" data-tag="programming">Programming</button>
+                <button type="button" class="tag-btn research" data-tag="research">Research</button>
+                <button type="button" class="tag-btn personal" data-tag="personal">Personal</button>
+            </div>
+            <input type="hidden" name="tags" id="selected-tags">
+            <div id="selected-tags-display"></div>
+        </div>
+        
         <button type="submit">Add URL</button>
     </form>
 
@@ -19,14 +34,21 @@
         <div class="url-item">
             <div class="url-title">{{ item.title }}</div>
             <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+            
+            <!-- Display tags -->
+            <div class="url-tags">
+                {% for tag in item.tags %}
+                <span class="tag-pill tag-{{ tag }}">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            
             <br>
             <a href="/delete/{{ loop.index0 }}" 
                class="delete-btn" 
                onclick="return confirm('Are you sure you want to delete this URL?')">
                Delete
             </a>
-            <a href="/archive/{{ loop.index0 }}" class="archive-btn"
-			   onclick="return confirm('Are you sure you want to archive this URL?')">Archive</a>
+            <a href="/archive/{{ loop.index0 }}" class="archive-btn">Archive</a>
         </div>
         {% endfor %}
     {% else %}

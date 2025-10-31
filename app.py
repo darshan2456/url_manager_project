@@ -3,7 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
-import validators
 
 app = Flask(__name__)
 
@@ -42,16 +41,11 @@ def add_url():
     global urls
     
     url = request.form['url']
+    tags = request.form.get('tags', '').split(',')
+    tags = [tag.strip() for tag in tags if tag.strip()]
     
-    if validators.url(url):
-        pass
-    else:
-        error_message="page does not exist"
-        return redirect('/')
-            
     # Simple scraping - just get title for now
     try:
-        
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
@@ -65,7 +59,8 @@ def add_url():
     # Add to our list
     urls.append({
         'url': url,
-        'title': title_text
+        'title': title_text,
+        'tags': tags
     })
     
     # Save to JSON file
@@ -73,7 +68,6 @@ def add_url():
     
     # Redirect to homepage
     return redirect('/')
-
 
 @app.route('/delete/<int:url_index>')
 def delete_url(url_index):
