@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import validators
 
 app = Flask(__name__)
 
@@ -44,6 +45,12 @@ def add_url():
     tags = request.form.get('tags', '').split(',')
     tags = [tag.strip() for tag in tags if tag.strip()]
     
+    # URL VALIDATION - RESTORED
+    if not validators.url(url):
+        # You can handle this better - maybe flash a message
+        print(f"Invalid URL: {url}")
+        return redirect('/')
+        
     # Simple scraping - just get title for now
     try:
         headers = {
