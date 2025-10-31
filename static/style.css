@@ -96,7 +96,7 @@ button:hover {
 }
 
 .archived {
-    opacity: 1;
+    opacity: .7;
     border-left-color: #6c757d;
     background-color: #f8f9fa;
 }
