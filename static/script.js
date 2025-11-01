@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const tagButtons = document.querySelectorAll('.tag-btn');
+		const tagButtons = document.querySelectorAll('.tag-btn');
     const selectedTagsInput = document.getElementById('selected-tags');
     const selectedTagsDisplay = document.getElementById('selected-tags-display');
     
