@@ -52,6 +52,7 @@
                        Delete
                     </a>
                     <a href="/archive/{{ loop.index0 }}" class="archive-btn">Archive</a>
+                    <button class="copy-btn" data-url="{{ item.url }}">Copy URL</button>
                 </div>
                 {% endfor %}
             {% else %}
@@ -89,8 +90,8 @@
                     {% if tag_urls %}
                     <div class="tag-sidebar-item">
                         <button class="tag-sidebar-btn tag-{{ tag }}" data-tag="{{ tag }}">
-							{{ tag }} ({{ tag_urls|length }})
-						</button>	
+                            {{ tag }} ({{ tag_urls|length }})
+                        </button>
                         <div class="tag-dropdown" id="dropdown-{{ tag }}">
                             {% for url in tag_urls %}
                             <div class="dropdown-url">

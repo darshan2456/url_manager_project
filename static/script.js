@@ -44,6 +44,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Copy URL functionality - ONLY for saved URLs (not archived)
+    const copyButtons = document.querySelectorAll('.url-item:not(.archived) .copy-btn');
+    
+    copyButtons.forEach(button => {
+        button.addEventListener('click', async function() {
+            const url = this.getAttribute('data-url');
+            
+            try {
+                await navigator.clipboard.writeText(url);
+                
+                // Visual feedback
+                this.classList.add('copied');
+                this.textContent = 'Copied!';
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                    this.textContent = 'Copy URL';
+                }, 2000);
+                
+            } catch (err) {
+                // Fallback for older browsers
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy URL to clipboard');
+            }
+        });
+    });
+
     // Close dropdowns when clicking outside
     document.addEventListener('click', function() {
         closeAllDropdowns();

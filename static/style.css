@@ -298,3 +298,34 @@ button:hover {
 .tag-programming { background: #10B981; }
 .tag-research { background: #8B5CF6; }
 .tag-personal { background: #F59E0B; }
+
+.copy-btn {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-left: 10px;
+    display: inline-block;
+    padding: 4px 8px;
+    border: 1px solid #6c757d;
+    border-radius: 3px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.copy-btn:hover {
+    background: #6c757d;
+    color: white;
+}
+
+.copy-btn.copied {
+    background: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.copy-btn.copied::after {
+    content: " ✓";
+    font-weight: bold;
+}
