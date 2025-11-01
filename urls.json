@@ -9,6 +9,27 @@
       "url": "https://www.youtube.com/watch?v=o3nBbvfdwkI",
       "title": "How I Beat The Password Game - YouTube",
       "tags": []
+    },
+    {
+      "url": "https://www.ibm.com/think/topics/quantum-computing",
+      "title": "What Is Quantum Computing? | IBM",
+      "tags": [
+        "research"
+      ]
+    },
+    {
+      "url": "https://ai.google/",
+      "title": "Google AI -\n      \n      How we're making AI helpful for everyone",
+      "tags": [
+        "work"
+      ]
+    },
+    {
+      "url": "https://docs.claude.com/en/docs/claude-code/vs-code",
+      "title": "Visual Studio Code - Claude Docs",
+      "tags": [
+        "work"
+      ]
     }
   ],
   "archived": []

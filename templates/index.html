@@ -88,9 +88,9 @@
                     
                     {% if tag_urls %}
                     <div class="tag-sidebar-item">
-                        <button class="tag-sidebar-btn tag-{{ tag }}" onclick="toggleDropdown('{{ tag }}')">
-                            {{ tag }} ({{ tag_urls|length }})
-                        </button>
+                        <button class="tag-sidebar-btn tag-{{ tag }}" data-tag="{{ tag }}">
+							{{ tag }} ({{ tag_urls|length }})
+						</button>	
                         <div class="tag-dropdown" id="dropdown-{{ tag }}">
                             {% for url in tag_urls %}
                             <div class="dropdown-url">

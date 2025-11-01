@@ -64,12 +64,32 @@ body {
     padding: 10px;
     background: white;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: 1px solid #e0e0e0;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    position: relative;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tag-dropdown.show {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
 }
 
 .dropdown-url {
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.dropdown-url:hover {
+    background-color: #f8f9fa;
 }
 
 .dropdown-url:last-child {
@@ -80,13 +100,20 @@ body {
     color: #333;
     text-decoration: none;
     font-size: 14px;
+    display: block;
+    font-weight: 500;
 }
 
 .dropdown-url a:hover {
     color: #007bff;
+    text-decoration: underline;
 }
 
-/* Existing styles remain the same below */
+.tag-sidebar-btn.active {
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+    transform: translateX(5px);
+}
+
 h1 {
     color: #333;
     text-align: center;
@@ -199,7 +226,6 @@ button:hover {
     text-decoration: none;
 }
 
-/* Tag Selection Styles */
 .tag-selection {
     margin: 15px 0;
 }
@@ -225,7 +251,6 @@ button:hover {
     color: white;
 }
 
-/* Tag colors */
 .tag-btn.work { border-color: #3B82F6; color: #3B82F6; }
 .tag-btn.work.selected { background: #3B82F6; }
 .tag-sidebar-btn.work { background: #3B82F6; }
@@ -242,7 +267,6 @@ button:hover {
 .tag-btn.personal.selected { background: #F59E0B; }
 .tag-sidebar-btn.personal { background: #F59E0B; }
 
-/* Selected tags display */
 #selected-tags-display {
     margin-top: 10px;
     min-height: 30px;
@@ -257,7 +281,6 @@ button:hover {
     color: white;
 }
 
-/* Tag display in URL items */
 .url-tags {
     margin-top: 8px;
 }

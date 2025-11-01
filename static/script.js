@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-		const tagButtons = document.querySelectorAll('.tag-btn');
+    // Tag selection functionality for the form
+    const tagButtons = document.querySelectorAll('.tag-btn');
     const selectedTagsInput = document.getElementById('selected-tags');
     const selectedTagsDisplay = document.getElementById('selected-tags-display');
     
@@ -31,4 +32,40 @@ document.addEventListener('DOMContentLoaded', function() {
             `<span class="selected-tag-pill tag-${tag}">${tag}</span>`
         ).join('');
     }
+
+    // Dropdown functionality for tag sidebar
+    const tagSidebarButtons = document.querySelectorAll('.tag-sidebar-btn');
+    
+    tagSidebarButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.stopPropagation();
+            const tag = this.getAttribute('data-tag');
+            toggleDropdown(tag);
+        });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function() {
+        closeAllDropdowns();
+    });
 });
+
+function toggleDropdown(tag) {
+    const dropdown = document.getElementById('dropdown-' + tag);
+    const isCurrentlyOpen = dropdown.style.display === 'block';
+    
+    // Close all dropdowns first
+    closeAllDropdowns();
+    
+    // If it wasn't open, open this one
+    if (!isCurrentlyOpen) {
+        dropdown.style.display = 'block';
+    }
+}
+
+function closeAllDropdowns() {
+    const allDropdowns = document.querySelectorAll('.tag-dropdown');
+    allDropdowns.forEach(dropdown => {
+        dropdown.style.display = 'none';
+    });
+}
