@@ -11,19 +11,22 @@
       "tags": []
     },
     {
-      "url": "https://www.ibm.com/think/topics/quantum-computing",
-      "title": "What Is Quantum Computing? | IBM",
-      "tags": [
-        "research"
-      ]
-    },
-    {
       "url": "https://ai.google/",
       "title": "Google AI -\n      \n      How we're making AI helpful for everyone",
-      "tags": [
-        "work"
-      ]
+      "tags": []
     },
+    {
+      "url": "https://www.ibm.com/think/topics/quantum-computing",
+      "title": "What Is Quantum Computing? | IBM",
+      "tags": []
+    },
+    {
+      "url": "https://www.news18.com/movies/regional-cinema/kantara-chapter-1-ott-release-when-and-where-to-watch-rishab-shettys-rs-780-cr-blockbuster-9662609.html",
+      "title": "Kantara Chapter 1 OTT Release: When And Where To Watch Rishab Shetty's Rs 780 Cr Blockbuster | Regional Cinema News - News18",
+      "tags": []
+    }
+  ],
+  "archived": [
     {
       "url": "https://docs.claude.com/en/docs/claude-code/vs-code",
       "title": "Visual Studio Code - Claude Docs",
@@ -31,6 +34,5 @@
         "work"
       ]
     }
-  ],
-  "archived": []
+  ]
 }

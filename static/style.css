@@ -283,15 +283,44 @@ button:hover {
 
 .url-tags {
     margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .tag-pill {
-    display: inline-block;
-    padding: 3px 8px;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px 3px 10px;
     border-radius: 10px;
     font-size: 11px;
-    margin-right: 5px;
     color: white;
+    margin-bottom: 3px;
+}
+
+.remove-tag-btn {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 4px;
+    line-height: 1;
+    padding: 0;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-tag-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
 }
 
 .tag-work { background: #3B82F6; }

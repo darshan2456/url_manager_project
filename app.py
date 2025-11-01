@@ -45,12 +45,10 @@ def add_url():
     tags = request.form.get('tags', '').split(',')
     tags = [tag.strip() for tag in tags if tag.strip()]
     
-    # URL VALIDATION - RESTORED
+    # URL validation
     if not validators.url(url):
-        # You can handle this better - maybe flash a message
-        print(f"Invalid URL: {url}")
         return redirect('/')
-        
+    
     # Simple scraping - just get title for now
     try:
         headers = {
@@ -105,13 +103,18 @@ def unarchive_url(url_index):
         save_urls(urls, archived_urls)
     return redirect('/')
 
+@app.route('/remove-tag/<int:url_index>/<tag>')
+def remove_tag(url_index, tag):
+    global urls
+    if 0 <= url_index < len(urls):
+        # Remove the tag from the URL's tags list
+        if tag in urls[url_index]['tags']:
+            urls[url_index]['tags'].remove(tag)
+            save_urls(urls, archived_urls)
+    
+    return redirect('/')
 
 if __name__ == '__main__':
-    # Get port from environment or default to 5000
     port = int(os.environ.get("PORT", 5000))
-    
-    # Only enable debug mode if explicitly set
     debug = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
-    
-    # Run on all interfaces with proper settings
     app.run(host='0.0.0.0', port=port, debug=debug)
