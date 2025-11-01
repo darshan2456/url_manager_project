@@ -1,31 +1,10 @@
 {
-  "active": [
-    {
-      "url": "https://www.derekthompson.org/p/this-is-how-the-ai-bubble-will-pop",
-      "title": "This Is How the AI Bubble Will Pop - Derek Thompson"
-    },
-    {
-      "url": "https://www.thehindu.com/sci-tech/science/what-is-googles-quantum-advantage-leap-explained/article70202625.ece",
-      "title": "What is Google\u2019s \u2018quantum advantage\u2019 leap? | Explained - The Hindu",
-      "tags": [
-        "research"
-      ]
-    },
-    {
-      "url": "https://www.technotification.com/2025/02/is-c-still-relevant.html",
-      "title": "Is C++ Still Relevant in 2025 and Beyond?",
-      "tags": [
-        "programming"
-      ]
-    }
-  ],
+  "active": [],
   "archived": [
     {
-      "url": "https://www.youtube.com/watch?v=X5TKJIUoUO8",
-      "title": "Beating Minecraft, But I Can't Break the Laws of Hinduism - YouTube",
-      "tags": [
-        "personal"
-      ]
+      "url": "https://www.derekthompson.org/p/this-is-how-the-ai-bubble-will-pop",
+      "title": "This Is How the AI Bubble Will Pop - Derek Thompson",
+      "tags": []
     }
   ]
 }

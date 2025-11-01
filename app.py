@@ -105,5 +105,13 @@ def unarchive_url(url_index):
         save_urls(urls, archived_urls)
     return redirect('/')
 
+
 if __name__ == '__main__':
-    app.run(debug=True,port=8080)
+    # Get port from environment or default to 5000
+    port = int(os.environ.get("PORT", 5000))
+    
+    # Only enable debug mode if explicitly set
+    debug = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
+    
+    # Run on all interfaces with proper settings
+    app.run(host='0.0.0.0', port=port, debug=debug)
