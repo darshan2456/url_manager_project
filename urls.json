@@ -1,10 +1,15 @@
 {
-  "active": [],
-  "archived": [
+  "active": [
     {
       "url": "https://www.derekthompson.org/p/this-is-how-the-ai-bubble-will-pop",
       "title": "This Is How the AI Bubble Will Pop - Derek Thompson",
       "tags": []
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=o3nBbvfdwkI",
+      "title": "How I Beat The Password Game - YouTube",
+      "tags": []
     }
-  ]
+  ],
+  "archived": []
 }

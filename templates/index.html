@@ -6,68 +6,103 @@
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
-    <h1>URL Manager</h1>
-    
-    <form action="/add" method="POST">
-        <input type="url" name="url" placeholder="https://example.com" required>
-        
-        <!-- Tag Selection -->
-        <div class="tag-selection">
-            <label>Add Tags:</label>
-            <div class="tag-buttons">
-                <button type="button" class="tag-btn work" data-tag="work">Work</button>
-                <button type="button" class="tag-btn programming" data-tag="programming">Programming</button>
-                <button type="button" class="tag-btn research" data-tag="research">Research</button>
-                <button type="button" class="tag-btn personal" data-tag="personal">Personal</button>
-            </div>
-            <input type="hidden" name="tags" id="selected-tags">
-            <div id="selected-tags-display"></div>
-        </div>
-        
-        <button type="submit">Add URL</button>
-    </form>
-
-    <h2>Saved URLs</h2>
-    
-    {% if urls %}
-        {% for item in urls %}
-        <div class="url-item">
-            <div class="url-title">{{ item.title }}</div>
-            <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>URL Manager</h1>
             
-            <!-- Display tags -->
-            <div class="url-tags">
-                {% for tag in item.tags %}
-                <span class="tag-pill tag-{{ tag }}">{{ tag }}</span>
+            <form action="/add" method="POST">
+                <input type="url" name="url" placeholder="https://example.com" required>
+                
+                <!-- Tag Selection -->
+                <div class="tag-selection">
+                    <label>Add Tags:</label>
+                    <div class="tag-buttons">
+                        <button type="button" class="tag-btn work" data-tag="work">Work</button>
+                        <button type="button" class="tag-btn programming" data-tag="programming">Programming</button>
+                        <button type="button" class="tag-btn research" data-tag="research">Research</button>
+                        <button type="button" class="tag-btn personal" data-tag="personal">Personal</button>
+                    </div>
+                    <input type="hidden" name="tags" id="selected-tags">
+                    <div id="selected-tags-display"></div>
+                </div>
+                
+                <button type="submit">Add URL</button>
+            </form>
+
+            <h2>Saved URLs</h2>
+            
+            {% if urls %}
+                {% for item in urls %}
+                <div class="url-item">
+                    <div class="url-title">{{ item.title }}</div>
+                    <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+                    
+                    <!-- Display tags -->
+                    <div class="url-tags">
+                        {% for tag in item.tags %}
+                        <span class="tag-pill tag-{{ tag }}">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <br>
+                    <a href="/delete/{{ loop.index0 }}" 
+                       class="delete-btn" 
+                       onclick="return confirm('Are you sure you want to delete this URL?')">
+                       Delete
+                    </a>
+                    <a href="/archive/{{ loop.index0 }}" class="archive-btn">Archive</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No URLs added yet.</p>
+            {% endif %}
+
+            <h2>Archived URLs</h2>
+            
+            {% if archived_urls %}
+                {% for item in archived_urls %}
+                <div class="url-item archived">
+                    <div class="url-title">{{ item.title }}</div>
+                    <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+                    <br>
+                    <a href="/unarchive/{{ loop.index0 }}" class="unarchive-btn">Unarchive</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No archived URLs.</p>
+            {% endif %}
+        </div>
+
+        <!-- Tag Sidebar -->
+        <div class="tag-sidebar">
+            <h3>TAGS</h3>
+            <div class="tag-cloud">
+                {% for tag in ['work', 'programming', 'research', 'personal'] %}
+                    {% set tag_urls = [] %}
+                    {% for url in urls %}
+                        {% if tag in url.tags %}
+                            {% set _ = tag_urls.append(url) %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if tag_urls %}
+                    <div class="tag-sidebar-item">
+                        <button class="tag-sidebar-btn tag-{{ tag }}" onclick="toggleDropdown('{{ tag }}')">
+                            {{ tag }} ({{ tag_urls|length }})
+                        </button>
+                        <div class="tag-dropdown" id="dropdown-{{ tag }}">
+                            {% for url in tag_urls %}
+                            <div class="dropdown-url">
+                                <a href="{{ url.url }}" target="_blank">{{ url.title }}</a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
                 {% endfor %}
             </div>
-            
-            <br>
-            <a href="/delete/{{ loop.index0 }}" 
-               class="delete-btn" 
-               onclick="return confirm('Are you sure you want to delete this URL?')">
-               Delete
-            </a>
-            <a href="/archive/{{ loop.index0 }}" class="archive-btn">Archive</a>
         </div>
-        {% endfor %}
-    {% else %}
-        <p>No URLs added yet.</p>
-    {% endif %}
-
-    <h2>Archived URLs</h2>
-    
-    {% if archived_urls %}
-        {% for item in archived_urls %}
-        <div class="url-item archived">
-            <div class="url-title">{{ item.title }}</div>
-            <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
-            <br>
-            <a href="/unarchive/{{ loop.index0 }}" class="unarchive-btn">Unarchive</a>
-        </div>
-        {% endfor %}
-    {% else %}
-        <p>No archived URLs.</p>
-    {% endif %}
+    </div>
 </body>
 </html>

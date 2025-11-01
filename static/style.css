@@ -1,11 +1,92 @@
 body {
     font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 40px auto;
+    margin: 0;
     padding: 20px;
     line-height: 1.6;
 }
 
+.container {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-content {
+    flex: 1;
+}
+
+.tag-sidebar {
+    width: 300px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.tag-sidebar h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.tag-cloud {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tag-sidebar-item {
+    margin-bottom: 15px;
+}
+
+.tag-sidebar-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s;
+}
+
+.tag-sidebar-btn:hover {
+    opacity: 0.9;
+    transform: translateX(5px);
+}
+
+.tag-dropdown {
+    display: none;
+    margin-top: 5px;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.dropdown-url {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-url:last-child {
+    border-bottom: none;
+}
+
+.dropdown-url a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.dropdown-url a:hover {
+    color: #007bff;
+}
+
+/* Existing styles remain the same below */
 h1 {
     color: #333;
     text-align: center;
@@ -147,15 +228,19 @@ button:hover {
 /* Tag colors */
 .tag-btn.work { border-color: #3B82F6; color: #3B82F6; }
 .tag-btn.work.selected { background: #3B82F6; }
+.tag-sidebar-btn.work { background: #3B82F6; }
 
 .tag-btn.programming { border-color: #10B981; color: #10B981; }
 .tag-btn.programming.selected { background: #10B981; }
+.tag-sidebar-btn.programming { background: #10B981; }
 
 .tag-btn.research { border-color: #8B5CF6; color: #8B5CF6; }
 .tag-btn.research.selected { background: #8B5CF6; }
+.tag-sidebar-btn.research { background: #8B5CF6; }
 
 .tag-btn.personal { border-color: #F59E0B; color: #F59E0B; }
 .tag-btn.personal.selected { background: #F59E0B; }
+.tag-sidebar-btn.personal { background: #F59E0B; }
 
 /* Selected tags display */
 #selected-tags-display {
