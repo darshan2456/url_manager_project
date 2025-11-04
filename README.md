@@ -111,9 +111,7 @@ url_manager_project/
 
 ## 🚀 **Future Enhancements**
 - 🔍 Search functionality
-- 📁 Custom tag creation
 - 👥 User accounts
-- 📤 Export capabilities
 - 🔄 Bulk operations
 
 ---
