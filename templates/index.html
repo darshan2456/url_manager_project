@@ -54,12 +54,15 @@
 			</div>
         
             <br>
-				<a href="/delete/{{ url_index }}" 
-				class="delete-btn" 
-				onclick="return confirm('Are you sure you want to delete this URL?')">
-				Delete
-				</a>
-				<a href="/archive/{{ url_index }}" class="archive-btn">Archive</a>
+				<form action="/delete/{{ url_index }}" method="POST" style="display: inline;">
+					<button type="submit" class="delete-btn" onclick="return confirm('are you sure you want to delete?')">Delete</button>
+				</form>
+				<form action="/archive/{{ url_index }}" method="POST" style="display: inline;">
+					<button type="submit" class="archive-btn"
+					onclick="return confirm('Archive this URL?')">
+						Archive
+					</button>
+				</form>
 				<button class="copy-btn" data-url="{{ item.url }}">Copy URL</button>
 			</div>
 				{% endfor %}
@@ -87,7 +90,11 @@
                     {% endif %}
                     
                     <br>
-                    <a href="/unarchive/{{ loop.index0 }}" class="unarchive-btn">Unarchive</a>
+                    <form action="/unarchive/{{ loop.index0 }}" method="POST" style="display: inline;">
+					<button type="submit" class="unarchive-btn" onclick="return confirm('Unarchive this URL?')">
+						Unarchive
+					</button>
+					</form>
                 </div>
                 {% endfor %}
             {% else %}

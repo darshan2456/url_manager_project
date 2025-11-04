@@ -74,33 +74,29 @@ def add_url():
     # Redirect to homepage
     return redirect('/')
 
-@app.route('/delete/<int:url_index>')
+@app.route('/delete/<int:url_index>',methods=['POST'])
 def delete_url(url_index):
     global urls
-    # Check if index is valid
-    if 0 <= url_index < len(urls):
-        urls.pop(url_index)
-        save_urls(urls, archived_urls)
+    urls.pop(url_index)
+    save_urls(urls, archived_urls)
     return redirect('/')
 
-@app.route('/archive/<int:url_index>')
+@app.route('/archive/<int:url_index>',methods=['POST'])
 def archive_url(url_index):
     global urls, archived_urls
-    if 0 <= url_index < len(urls):
-        # Move from urls to archived_urls
-        archived_url = urls.pop(url_index)
-        archived_urls.append(archived_url)
-        save_urls(urls, archived_urls)
+    # Move from urls to archived_urls
+    archived_url = urls.pop(url_index)
+    archived_urls.append(archived_url)
+    save_urls(urls, archived_urls)
     return redirect('/')
 
-@app.route('/unarchive/<int:url_index>')
+@app.route('/unarchive/<int:url_index>',methods=['POST'])
 def unarchive_url(url_index):
     global urls, archived_urls
-    if 0 <= url_index < len(archived_urls):
-        # Move from archived_urls back to urls
-        unarchived_url = archived_urls.pop(url_index)
-        urls.append(unarchived_url)
-        save_urls(urls, archived_urls)
+    # Move from archived_urls back to urls
+    unarchived_url = archived_urls.pop(url_index)
+    urls.append(unarchived_url)
+    save_urls(urls, archived_urls)
     return redirect('/')
 
 @app.route('/remove-tag/<int:url_index>/<tag>')

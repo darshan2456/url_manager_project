@@ -132,7 +132,7 @@ input[type="url"] {
     font-size: 16px;
 }
 
-button {
+button[type="submit"] {
     padding: 8px 16px;
     background: #007bff;
     color: white;
@@ -140,7 +140,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+button[type="submit"]:hover {
     background: #0056b3;
 }
 
@@ -168,62 +168,58 @@ button:hover {
     text-decoration: underline;
 }
 
-.delete-btn {
-    color: #dc3545;
-    text-decoration: none;
+/* UPDATED BUTTON STYLES FOR FORMS */
+.delete-btn, .archive-btn, .unarchive-btn {
     font-size: 14px;
     margin-top: 8px;
+    margin-left: 10px;
+    padding: 6px 12px;
+    border: 2px solid;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    font-family: inherit;
     display: inline-block;
-    padding: 4px 8px;
-    border: 1px solid #dc3545;
-    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.delete-btn {
+    color: #dc3545;
+    border-color: #dc3545;
 }
 
 .delete-btn:hover {
     background: #dc3545;
     color: white;
-    text-decoration: none;
+    transform: translateY(-1px);
 }
 
 .archive-btn {
     color: #007bff;
-    text-decoration: none;
-    font-size: 14px;
-    margin-top: 8px;
-    margin-left: 10px;
-    display: inline-block;
-    padding: 4px 8px;
-    border: 1px solid #007bff;
-    border-radius: 3px;
+    border-color: #007bff;
 }
 
 .archive-btn:hover {
     background: #007bff;
     color: white;
-    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.unarchive-btn {
+    color: #28a745;
+    border-color: #28a745;
+}
+
+.unarchive-btn:hover {
+    background: #28a745;
+    color: white;
+    transform: translateY(-1px);
 }
 
 .archived {
     opacity: 0.6;
     border-left-color: #6c757d;
     background-color: #f8f9fa;
-}
-
-.unarchive-btn {
-    color: #28a745;
-    text-decoration: none;
-    font-size: 14px;
-    margin-top: 8px;
-    display: inline-block;
-    padding: 4px 8px;
-    border: 1px solid #28a745;
-    border-radius: 3px;
-}
-
-.unarchive-btn:hover {
-    background: #28a745;
-    color: white;
-    text-decoration: none;
 }
 
 .tag-selection {
@@ -252,20 +248,24 @@ button:hover {
 }
 
 .tag-btn.work { border-color: #3B82F6; color: #3B82F6; }
-.tag-btn.work.selected { background: #3B82F6; }
+.tag-btn.work.selected { background: #3B82F6; color: white;}
 .tag-sidebar-btn.work { background: #3B82F6; }
 
 .tag-btn.programming { border-color: #10B981; color: #10B981; }
-.tag-btn.programming.selected { background: #10B981; }
+.tag-btn.programming.selected { background: #10B981; color: white;}
 .tag-sidebar-btn.programming { background: #10B981; }
 
 .tag-btn.research { border-color: #8B5CF6; color: #8B5CF6; }
-.tag-btn.research.selected { background: #8B5CF6; }
+.tag-btn.research.selected { background: #8B5CF6; color: white;}
 .tag-sidebar-btn.research { background: #8B5CF6; }
 
 .tag-btn.personal { border-color: #F59E0B; color: #F59E0B; }
-.tag-btn.personal.selected { background: #F59E0B; }
+.tag-btn.personal.selected { background: #F59E0B; color: white;}
 .tag-sidebar-btn.personal { background: #F59E0B; }
+
+.tag-btn.news { border-color: #EF4444; color: #EF4444; }
+.tag-btn.news.selected { background: #EF4444; color: white; }
+.tag-sidebar-btn.news { background: #EF4444; }
 
 #selected-tags-display {
     margin-top: 10px;
@@ -327,6 +327,7 @@ button:hover {
 .tag-programming { background: #10B981; }
 .tag-research { background: #8B5CF6; }
 .tag-personal { background: #F59E0B; }
+.tag-news { background: #EF4444; }
 
 .copy-btn {
     color: #6c757d;
@@ -359,20 +360,8 @@ button:hover {
     font-weight: bold;
 }
 
-.tag-btn.news { 
-    border-color: #EF4444; 
-    color: #EF4444; 
-}
-
-.tag-btn.news.selected { 
-    background: #EF4444; 
-    color: white; 
-}
-
-.tag-sidebar-btn.news { 
-    background: #EF4444; 
-}
-
-.tag-news { 
-    background: #EF4444; 
+/* Remove default button styles */
+button {
+    font-family: inherit;
+    font-size: inherit;
 }
