@@ -22,6 +22,7 @@
                         <button type="button" class="tag-btn programming" data-tag="programming">Programming</button>
                         <button type="button" class="tag-btn research" data-tag="research">Research</button>
                         <button type="button" class="tag-btn personal" data-tag="personal">Personal</button>
+						<button type="button" class="tag-btn news" data-tag="news">News</button>
                     </div>
                     <input type="hidden" name="tags" id="selected-tags">
                     <div id="selected-tags-display"></div>
@@ -52,19 +53,19 @@
             {% endfor %}
 			</div>
         
-        <br>
-        <a href="/delete/{{ url_index }}" 
-           class="delete-btn" 
-           onclick="return confirm('Are you sure you want to delete this URL?')">
-           Delete
-        </a>
-        <a href="/archive/{{ url_index }}" class="archive-btn">Archive</a>
-        <button class="copy-btn" data-url="{{ item.url }}">Copy URL</button>
-    </div>
-    {% endfor %}
-{% else %}
-    <p>No URLs added yet.</p>
-{% endif %}
+            <br>
+				<a href="/delete/{{ url_index }}" 
+				class="delete-btn" 
+				onclick="return confirm('Are you sure you want to delete this URL?')">
+				Delete
+				</a>
+				<a href="/archive/{{ url_index }}" class="archive-btn">Archive</a>
+				<button class="copy-btn" data-url="{{ item.url }}">Copy URL</button>
+			</div>
+				{% endfor %}
+			{% else %}
+			<p>No URLs added yet.</p>
+			{% endif %}
 
             <h2>Archived URLs</h2>
             
@@ -98,7 +99,7 @@
         <div class="tag-sidebar">
             <h3>TAGS</h3>
             <div class="tag-cloud">
-                {% for tag in ['work', 'programming', 'research', 'personal'] %}
+                {% for tag in ['work', 'programming', 'research', 'personal','news'] %}
                     {% set tag_urls = [] %}
                     {% for url in urls %}
                         {% if tag in url.tags %}

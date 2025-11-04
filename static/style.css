@@ -358,3 +358,21 @@ button:hover {
     content: " ✓";
     font-weight: bold;
 }
+
+.tag-btn.news { 
+    border-color: #EF4444; 
+    color: #EF4444; 
+}
+
+.tag-btn.news.selected { 
+    background: #EF4444; 
+    color: white; 
+}
+
+.tag-sidebar-btn.news { 
+    background: #EF4444; 
+}
+
+.tag-news { 
+    background: #EF4444; 
+}
