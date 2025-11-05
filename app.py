@@ -1,41 +1,75 @@
+import os
 from flask import Flask, render_template, request, redirect, jsonify
 import requests
 from flask_sqlalchemy import SQLAlchemy
 from bs4 import BeautifulSoup
-import os
 
-# ✅ PEHLE app CREATE KARO
 app = Flask(__name__)
 
-# ✅ PHIR app USE KARO
-db_path = os.path.join(os.getcwd(), 'url_manager.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+# ✅ PRODUCTION-READY DATABASE CONFIG
+def get_database_uri():
+    if 'DATABASE_URL' in os.environ:
+        # Production - PostgreSQL (Render)
+        uri = os.environ['DATABASE_URL']
+        if uri.startswith('postgres://'):
+            uri = uri.replace('postgres://', 'postgresql://', 1)
+        return uri
+    else:
+        # Development - SQLite (temporary)
+        return 'sqlite:///url_manager.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = get_database_uri()
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# ✅ LAST MEIN db SETUP KARO
 db = SQLAlchemy(app)
 
-# 1. URL Class
+# ✅ MODELS (TERA EXISTING CODE - BILKUL SAME)
 class URL(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(500))
     title = db.Column(db.String(200))
     is_archived = db.Column(db.Boolean, default=False)
 
-# 2. Tag Class
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
     color = db.Column(db.String(7))
 
-# 3. URLTag Class
 class URLTag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url_id = db.Column(db.Integer, db.ForeignKey('url.id'))
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))
 
+# ✅ AUTO CREATE TABLES & TAGS
+@app.before_first_request
+def initialize():
+    try:
+        db.create_all()
+        print("✅ Database tables created")
+        
+        # Auto-create tags
+        tags_data = [
+            ('work', '#3B82F6'),
+            ('programming', '#10B981'),
+            ('research', '#8B5CF6'),
+            ('personal', '#F59E0B'),
+            ('news', '#EF4444')
+        ]
+        
+        for name, color in tags_data:
+            if not Tag.query.filter_by(name=name).first():
+                tag = Tag(name=name, color=color)
+                db.session.add(tag)
+                print(f"✅ Tag created: {name}")
+        
+        db.session.commit()
+        print("✅ Tags initialized successfully!")
+        
+    except Exception as e:
+        print(f"❌ Initialization error: {e}")
+        db.session.rollback()
 
-
+# ✅ TERA EXISTING ROUTES - BILKUL SAME RAHEGA
 @app.route('/')
 def index():
     active_urls_db = URL.query.filter_by(is_archived=False).all()
@@ -45,15 +79,11 @@ def index():
         result = []
         for url in urls:
             url_tags = URLTag.query.filter_by(url_id=url.id).all()
-            print(f"🔄 URL {url.id} - Found {len(url_tags)} URLTag records")  # Debug
-        
             tag_names = []
             for url_tag in url_tags:
                 tag = Tag.query.get(url_tag.tag_id)
-                print(f"   Tag ID {url_tag.tag_id} -> {tag.name if tag else 'NOT FOUND'}")  # Debug
                 if tag:
                     tag_names.append(tag.name)
-        
             result.append({
                 'id': url.id,
                 'url': url.url,
@@ -66,7 +96,6 @@ def index():
     archived_urls = convert_to_dict(archived_urls_db)
     
     return render_template('index.html', urls=active_urls, archived_urls=archived_urls)
-    
 
 @app.route('/add', methods=['POST'])
 def add_url():
@@ -142,6 +171,7 @@ def archive_url(url_id):
     if url:
         url.is_archived = True
         db.session.commit()
+        print(f"✅ URL {url_id} archived")
     return redirect('/')
 
 @app.route('/unarchive/<int:url_id>', methods=['POST'])
@@ -150,6 +180,7 @@ def unarchive_url(url_id):
     if url:
         url.is_archived = False
         db.session.commit()
+        print(f"✅ URL {url_id} unarchived")
     return redirect('/')
 
 @app.route('/remove-tag/<int:url_id>/<tag>')
@@ -175,31 +206,6 @@ def remove_tag(url_id, tag):
     
     return redirect('/')
 
-
-# Temporary route to insert tags
-@app.route('/init-tags')
-def init_tags():
-    tags_data = [
-        ('work', '#3B82F6'),
-        ('programming', '#10B981'),
-        ('research', '#8B5CF6'),
-        ('personal', '#F59E0B'),
-        ('news', '#EF4444')
-    ]
-    
-    for name, color in tags_data:
-        if not Tag.query.filter_by(name=name).first():
-            tag = Tag(name=name, color=color)
-            db.session.add(tag)
-    
-    db.session.commit()
-    return "Tags initialized!"
-    
-    
-    
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     port = int(os.environ.get("PORT", 5000))
-    debug = os.environ.get("FLASK_DEBUG", "True").lower() == "true"
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    app.run(host='0.0.0.0', port=port, debug=False)
