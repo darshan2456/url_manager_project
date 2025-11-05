@@ -1,19 +1,19 @@
 from flask import Flask, render_template, request, redirect, jsonify
-import flask_sqlalchemy
 import requests
 from flask_sqlalchemy import SQLAlchemy
 from bs4 import BeautifulSoup
 import os
 
+# ✅ PEHLE app CREATE KARO
+app = Flask(__name__)
 
+# ✅ PHIR app USE KARO
 db_path = os.path.join(os.getcwd(), 'url_manager.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///url_manager.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
+# ✅ LAST MEIN db SETUP KARO
+db = SQLAlchemy(app)
 
 # 1. URL Class
 class URL(db.Model):
