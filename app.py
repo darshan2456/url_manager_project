@@ -41,7 +41,7 @@ class URLTag(db.Model):
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))
 
 # ✅ AUTO CREATE TABLES & TAGS
-@app.before_first_request
+@app.route('/start')
 def initialize():
     try:
         db.create_all()
