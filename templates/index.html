@@ -31,75 +31,79 @@
                 <button type="submit">Add URL</button>
             </form>
 
-            <h2>Saved URLs</h2>
             
-            <!-- In the Saved URLs section -->
-			{% if urls %}
-				{% for item in urls %}
-				<!-- Save the URL index to a variable -->
-				{% set url_index = loop.index0 %}
-			<div class="url-item">
-			<div class="url-title">{{ item.title }}</div>
-			<a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+			
+			
+			<!-- Saved URLs Section -->
+{% if urls %}
+    {% for item in urls %}
+    <div class="url-item">
+        <div class="url-title">{{ item.title }}</div>
+        <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
         
-			<!-- Display tags with remove links - FIXED -->
-			<div class="url-tags">
+        <!-- Display tags with remove links -->
+        <div class="url-tags">
             {% for tag in item.tags %}
             <span class="tag-pill tag-{{ tag }}">
                 {{ tag }}
-                <!-- Use the saved URL index variable -->
-                <a href="/remove-tag/{{ url_index }}/{{ tag }}" class="remove-tag-btn">×</a>
+                <!-- Use item.id instead of url_index -->
+                <a href="/remove-tag/{{ item.id }}/{{ tag }}" class="remove-tag-btn">×</a>
             </span>
             {% endfor %}
-			</div>
+        </div>
         
-            <br>
-				<form action="/delete/{{ url_index }}" method="POST" style="display: inline;">
-					<button type="submit" class="delete-btn" onclick="return confirm('are you sure you want to delete?')">Delete</button>
-				</form>
-				<form action="/archive/{{ url_index }}" method="POST" style="display: inline;">
-					<button type="submit" class="archive-btn"
-					onclick="return confirm('Archive this URL?')">
-						Archive
-					</button>
-				</form>
-				<button class="copy-btn" data-url="{{ item.url }}">Copy URL</button>
-			</div>
-				{% endfor %}
-			{% else %}
-			<p>No URLs added yet.</p>
-			{% endif %}
+        <br>
+        <!-- Buttons use item.id -->
+        <form action="/delete/{{ item.id }}" method="POST" style="display: inline;">
+            <button type="submit" class="delete-btn" 
+                    onclick="return confirm('Delete this URL?')">Delete</button>
+        </form>
+        
+        <form action="/archive/{{ item.id }}" method="POST" style="display: inline;">
+            <button type="submit" class="archive-btn"
+                    onclick="return confirm('Archive this URL?')">Archive</button>
+        </form>
+        
+        <button class="copy-btn" data-url="{{ item.url }}">Copy URL</button>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No URLs added yet.</p>
+{% endif %}
 
-            <h2>Archived URLs</h2>
-            
-            {% if archived_urls %}
-                {% for item in archived_urls %}
-                <div class="url-item archived">
-                    <div class="url-title">{{ item.title }}</div>
-                    <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
-                    
-                    <!-- Display tags for archived items (read-only) -->
-                    {% if item.tags %}
-                    <div class="url-tags">
-                        {% for tag in item.tags %}
-                        <span class="tag-pill tag-{{ tag }}">
-                            {{ tag }}
-                        </span>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    
-                    <br>
-                    <form action="/unarchive/{{ loop.index0 }}" method="POST" style="display: inline;">
-					<button type="submit" class="unarchive-btn" onclick="return confirm('Unarchive this URL?')">
-						Unarchive
-					</button>
-					</form>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p>No archived URLs.</p>
-            {% endif %}
+           
+
+
+		   <!-- Archived URLs Section -->
+<h2>Archived URLs</h2>
+
+{% if archived_urls %}
+    {% for item in archived_urls %}
+    <div class="url-item archived">
+        <div class="url-title">{{ item.title }}</div>
+        <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+        
+        <!-- Display tags (read-only for archived) -->
+        {% if item.tags %}
+        <div class="url-tags">
+            {% for tag in item.tags %}
+            <span class="tag-pill tag-{{ tag }}">
+                {{ tag }}
+            </span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <br>
+        <!-- Only Unarchive Button -->
+        <form action="/unarchive/{{ item.id }}" method="POST" style="display: inline;">
+            <button type="submit" class="unarchive-btn">Unarchive</button>
+        </form>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No archived URLs.</p>
+{% endif %}
         </div>
 
         <!-- Tag Sidebar -->
