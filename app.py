@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, jsonify
 import requests
 from flask_sqlalchemy import SQLAlchemy
 from bs4 import BeautifulSoup
+import validators 
 
 app = Flask(__name__)
 
@@ -69,12 +70,38 @@ def initialize():
         print(f"❌ Initialization error: {e}")
         db.session.rollback()
 
-# ✅ TERA EXISTING ROUTES - BILKUL SAME RAHEGA
+# ✅ SEARCH FUNCTIONALITY ADDED - TERA EXISTING INDEX ROUTE MODIFIED
 @app.route('/')
+@app.route('/search')  # Dono routes handle karega
 def index():
-    active_urls_db = URL.query.filter_by(is_archived=False).all()
-    archived_urls_db = URL.query.filter_by(is_archived=True).all()
+    search_query = request.args.get('q', '').strip()
     
+    # Search BOTH active and archived URLs
+    if search_query and not search_query.isspace():
+        # Active URLs that match search
+        active_results = URL.query.filter(
+            db.or_(
+                URL.title.ilike(f'%{search_query}%'),
+                URL.url.ilike(f'%{search_query}%')
+            )
+        ).filter_by(is_archived=False).all()
+        
+        # Archived URLs that match search  
+        archived_results = URL.query.filter(
+            db.or_(
+                URL.title.ilike(f'%{search_query}%'),
+                URL.url.ilike(f'%{search_query}%')
+            )
+        ).filter_by(is_archived=True).all()
+        
+        is_searching = True
+    else:
+        # No search - show all active and archived separately
+        active_results = URL.query.filter_by(is_archived=False).all()
+        archived_results = URL.query.filter_by(is_archived=True).all()
+        is_searching = False
+    
+    # Convert to dict (TERA EXISTING CODE)
     def convert_to_dict(urls):
         result = []
         for url in urls:
@@ -92,11 +119,26 @@ def index():
             })
         return result
     
-    active_urls = convert_to_dict(active_urls_db)
-    archived_urls = convert_to_dict(archived_urls_db)
+    active_urls = convert_to_dict(active_results)
+    archived_urls = convert_to_dict(archived_results)
     
-    return render_template('index.html', urls=active_urls, archived_urls=archived_urls)
+    # Tag colors for display
+    tag_colors = {
+        'work': '#3B82F6',
+        'programming': '#10B981',
+        'research': '#8B5CF6',
+        'personal': '#F59E0B',
+        'news': '#EF4444'
+    }
+    
+    return render_template('index.html', 
+                         urls=active_urls,
+                         archived_urls=archived_urls,
+                         search_query=search_query,
+                         is_searching=is_searching,
+                         tag_colors=tag_colors)
 
+# ✅ TERA EXISTING ROUTES - BILKUL SAME RAHEGA
 @app.route('/add', methods=['POST'])
 def add_url():
     try:
@@ -106,6 +148,9 @@ def add_url():
         
         print(f"🎯 DEBUG: URL: {url}, Tags: {tags}")
         
+        if not validators.url(url):
+            flash('please enter a valid url (e,g - https://example.com)','error')
+            return redirect('/')
         # ✅ SAFE TITLE FETCHING
         title_text = "No title"  # Default value
         try:

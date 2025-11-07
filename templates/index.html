@@ -10,6 +10,39 @@
         <!-- Main Content -->
         <div class="main-content">
             <h1>URL Manager</h1>
+			
+			
+			{% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message flash-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <!-- Search Form -->
+			<form action="/search" method="GET" class="search-form">
+				<input type="text" name="q" placeholder="Search by title or URL..." 
+					value="{{ search_query }}">
+				<button type="submit">🔍 Search</button>
+    
+				{% if is_searching %}
+				<!-- Simple link to root route -->
+				<a href="/" class="clear-btn">❌ Clear</a>
+				{% endif %}
+			</form>
+
+            <!-- SEARCH INFO ADDED -->
+            {% if is_searching %}
+            <div class="search-info">
+                <h3>Search Results for "{{ search_query }}"</h3>
+                <p>Found {{ urls|length }} active URLs • {{ archived_urls|length }} archived URLs</p>
+            </div>
+            {% endif %}
             
             <form action="/add" method="POST">
                 <input type="url" name="url" placeholder="https://example.com" required>
@@ -31,79 +64,79 @@
                 <button type="submit">Add URL</button>
             </form>
 
-            
-			
-			
-			<!-- Saved URLs Section -->
-{% if urls %}
-    {% for item in urls %}
-    <div class="url-item">
-        <div class="url-title">{{ item.title }}</div>
-        <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
-        
-        <!-- Display tags with remove links -->
-        <div class="url-tags">
-            {% for tag in item.tags %}
-            <span class="tag-pill tag-{{ tag }}">
-                {{ tag }}
-                <!-- Use item.id instead of url_index -->
-                <a href="/remove-tag/{{ item.id }}/{{ tag }}" class="remove-tag-btn">×</a>
-            </span>
-            {% endfor %}
-        </div>
-        
-        <br>
-        <!-- Buttons use item.id -->
-        <form action="/delete/{{ item.id }}" method="POST" style="display: inline;">
-            <button type="submit" class="delete-btn" 
-                    onclick="return confirm('Delete this URL?')">Delete</button>
-        </form>
-        
-        <form action="/archive/{{ item.id }}" method="POST" style="display: inline;">
-            <button type="submit" class="archive-btn"
-                    onclick="return confirm('Archive this URL?')">Archive</button>
-        </form>
-        
-        <button class="copy-btn" data-url="{{ item.url }}">Copy URL</button>
-    </div>
-    {% endfor %}
-{% else %}
-    <p>No URLs added yet.</p>
-{% endif %}
+            <!-- ACTIVE URLS SECTION - HEADING MODIFIED -->
+            <div class="section active-urls">
+                <h2>{% if is_searching %}🔍 Active Results{% else %}✅ Active URLs{% endif %}</h2>
+                
+                {% if urls %}
+                    {% for item in urls %}
+                    <div class="url-item">
+                        <div class="url-title">{{ item.title }}</div>
+                        <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+                        
+                        <!-- Display tags with remove links -->
+                        <div class="url-tags">
+                            {% for tag in item.tags %}
+                            <span class="tag-pill tag-{{ tag }}">
+                                {{ tag }}
+                                <!-- Use item.id instead of url_index -->
+                                <a href="/remove-tag/{{ item.id }}/{{ tag }}" class="remove-tag-btn">×</a>
+                            </span>
+                            {% endfor %}
+                        </div>
+                        
+                        <br>
+                        <!-- Buttons use item.id -->
+                        <form action="/delete/{{ item.id }}" method="POST" style="display: inline;">
+                            <button type="submit" class="delete-btn" 
+                                    onclick="return confirm('Delete this URL?')">Delete</button>
+                        </form>
+                        
+                        <form action="/archive/{{ item.id }}" method="POST" style="display: inline;">
+                            <button type="submit" class="archive-btn"
+                                    onclick="return confirm('Archive this URL?')">Archive</button>
+                        </form>
+                        
+                        <button class="copy-btn" data-url="{{ item.url }}">Copy URL</button>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>{% if is_searching %}No active URLs found for "{{ search_query }}"{% else %}No URLs added yet.{% endif %}</p>
+                {% endif %}
+            </div>
 
-           
+            <!-- ARCHIVED URLS SECTION - HEADING MODIFIED -->
+            <div class="section archived-urls">
+                <h2>{% if is_searching %}🔍 Archived Results{% else %}📦 Archived URLs{% endif %}</h2>
 
-
-		   <!-- Archived URLs Section -->
-<h2>Archived URLs</h2>
-
-{% if archived_urls %}
-    {% for item in archived_urls %}
-    <div class="url-item archived">
-        <div class="url-title">{{ item.title }}</div>
-        <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
-        
-        <!-- Display tags (read-only for archived) -->
-        {% if item.tags %}
-        <div class="url-tags">
-            {% for tag in item.tags %}
-            <span class="tag-pill tag-{{ tag }}">
-                {{ tag }}
-            </span>
-            {% endfor %}
-        </div>
-        {% endif %}
-        
-        <br>
-        <!-- Only Unarchive Button -->
-        <form action="/unarchive/{{ item.id }}" method="POST" style="display: inline;">
-            <button type="submit" class="unarchive-btn">Unarchive</button>
-        </form>
-    </div>
-    {% endfor %}
-{% else %}
-    <p>No archived URLs.</p>
-{% endif %}
+                {% if archived_urls %}
+                    {% for item in archived_urls %}
+                    <div class="url-item archived">
+                        <div class="url-title">{{ item.title }}</div>
+                        <a href="{{ item.url }}" target="_blank" class="url-link">{{ item.url }}</a>
+                        
+                        <!-- Display tags (read-only for archived) -->
+                        {% if item.tags %}
+                        <div class="url-tags">
+                            {% for tag in item.tags %}
+                            <span class="tag-pill tag-{{ tag }}">
+                                {{ tag }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        <br>
+                        <!-- Only Unarchive Button -->
+                        <form action="/unarchive/{{ item.id }}" method="POST" style="display: inline;">
+                            <button type="submit" class="unarchive-btn">Unarchive</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>{% if is_searching %}No archived URLs found for "{{ search_query }}"{% else %}No archived URLs.{% endif %}</p>
+                {% endif %}
+            </div>
         </div>
 
         <!-- Tag Sidebar -->

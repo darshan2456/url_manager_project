@@ -76,6 +76,38 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function() {
         closeAllDropdowns();
     });
+	
+	
+	// Real-time search functionality - DOMContentLoaded KE ANDAR
+	document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.querySelector('input[name="q"]');
+    const searchForm = document.querySelector('.search-form');
+    
+    if (searchInput && searchForm) {
+        let searchTimeout;
+        
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            
+            // Agar 2 characters se jyada hai to auto-search
+            if (this.value.length >= 2 || this.value.length === 0) {
+                searchTimeout = setTimeout(() => {
+                    searchForm.submit();
+                }, 2000); // 500ms delay
+            }
+        });
+        
+        // Enter key press pe bhi search
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                searchForm.submit();
+            }
+        });
+    }
+});
+
+
 });
 
 function toggleDropdown(tag) {

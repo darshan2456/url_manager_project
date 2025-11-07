@@ -4,3 +4,4 @@ beautifulsoup4==4.12.2
 requests==2.31.0
 psycopg2-binary==2.9.7
 gunicorn==21.2.0
+validators==0.35.0

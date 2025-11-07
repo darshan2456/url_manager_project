@@ -365,3 +365,110 @@ button {
     font-family: inherit;
     font-size: inherit;
 }
+
+
+/* SEARCH FORM STYLES */
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    align-items: center;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-form button {
+    padding: 10px 15px;
+    background: #3B82F6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.clear-btn {
+    padding: 10px 15px;
+    background: #6B7280;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.clear-btn:hover {
+    background: #4B5563;
+}
+
+/* SEARCH INFO STYLES */
+.search-info {
+    background: #EFF6FF;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border-left: 4px solid #3B82F6;
+}
+
+.search-info h3 {
+    margin: 0 0 5px 0;
+    color: #1E40AF;
+}
+
+.search-info p {
+    margin: 0;
+    color: #6B7280;
+    font-size: 14px;
+}
+
+/* SECTION STYLES */
+.section {
+    margin: 30px 0;
+}
+
+.section h2 {
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    color: #374151;
+}
+
+.active-urls h2 {
+    border-color: #10B981;  /* Green for active */
+}
+
+.archived-urls h2 {
+    border-color: #6B7280;  /* Gray for archived */
+}
+
+
+/* ✅ FLASH MESSAGES STYLES - CSS FILE KE END MEIN ADD KARNA */
+.flash-messages {
+    margin: 15px 0;
+}
+
+.flash-message {
+    padding: 12px 15px;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-weight: 500;
+    border: 1px solid;
+}
+
+.flash-success {
+    background: #D1FAE5;
+    color: #065F46;
+    border-color: #A7F3D0;
+}
+
+.flash-error {
+    background: #FEE2E2;
+    color: #991B1B;
+    border-color: #FECACA;
+}
