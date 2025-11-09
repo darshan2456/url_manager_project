@@ -47,7 +47,27 @@ class URLTag(db.Model):
     
 
 
-
+@app.route('/check-tables')
+def check_tables():
+    try:
+        # Check if tables exist
+        tables = db.engine.table_names()
+        
+        # Check if we can query urltag
+        urltag_count = URLTag.query.count()
+        tag_count = Tag.query.count()
+        url_count = URL.query.count()
+        
+        return f"""
+        Tables: {tables}<br>
+        URLTag entries: {urltag_count}<br>
+        Tag entries: {tag_count}<br>
+        URL entries: {url_count}<br>
+        Database: {db.engine.url}
+        """
+    except Exception as e:
+        return f"Error: {str(e)}"
+    
     
     
     
