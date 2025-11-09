@@ -39,11 +39,25 @@ class Tag(db.Model):
     color = db.Column(db.String(7))
 
 class URLTag(db.Model):
+    __tablename__ = 'urltag'
     id = db.Column(db.Integer, primary_key=True)
     url_id = db.Column(db.Integer, db.ForeignKey('url.id'))
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))
     
 
+
+@app.route('/debug-storage')
+def debug_storage():
+    import os
+    files = []
+    for root, dirs, filenames in os.walk('/'):
+        for f in filenames:
+            if f.endswith('.db') or f.endswith('.sqlite'):
+                files.append(os.path.join(root, f))
+    return f"Database files found: {files}"
+    
+    
+    
 # ✅ AUTO CREATE TABLES & TAGS
 @app.route('/start')
 def initialize():
