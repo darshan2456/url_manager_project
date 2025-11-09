@@ -188,8 +188,7 @@ def add_url():
         if tag:
             url_tag = URLTag(url_id=new_url.id, tag_id=tag.id)
             db.session.add(url_tag)
-
-db.session.commit()  # 👈 YE RAHEGA TAGS KE LIYE
+            db.session.commit()  # 👈 YE RAHEGA TAGS KE LIYE
         
     except Exception as e:
         db.session.rollback()
