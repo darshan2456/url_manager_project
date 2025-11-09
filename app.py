@@ -31,8 +31,6 @@ class URL(db.Model):
     url = db.Column(db.String(500))
     title = db.Column(db.String(200))
     is_archived = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    created_at = db.Column(db.DateTime, default=db.func.now())
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -44,11 +42,6 @@ class URLTag(db.Model):
     url_id = db.Column(db.Integer, db.ForeignKey('url.id'))
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))
     
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password_hash = db.Column(db.String(200), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.now())
 
 # ✅ AUTO CREATE TABLES & TAGS
 @app.route('/start')

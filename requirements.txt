@@ -81,7 +81,6 @@ pytest-shutil==1.8.1
 python-csv==0.0.14
 python-dateutil==2.9.0.post0
 pytz==2025.2
-pywin32==311
 pyzmq==27.0.2
 RapidFuzz==3.14.0
 requests==2.32.5
