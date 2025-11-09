@@ -27,6 +27,7 @@ db = SQLAlchemy(app)
 
 # ✅ MODELS (TERA EXISTING CODE - BILKUL SAME)
 class URL(db.Model):
+    __tablename__='url'
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(500))
     title = db.Column(db.String(200))
