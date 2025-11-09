@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.value.length >= 2 || this.value.length === 0) {
                 searchTimeout = setTimeout(() => {
                     searchForm.submit();
-                }, 2000); // 500ms delay
+                }, 2000); // 2000ms delay
             }
         });
         
