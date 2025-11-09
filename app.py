@@ -68,9 +68,7 @@ def check_tables():
         """
     except Exception as e:
         return f"Error: {str(e)}"
-        """
-    except Exception as e:
-        return f"Error: {str(e)}"
+     
     
     
     
