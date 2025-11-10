@@ -206,7 +206,10 @@ def add_url():
         
         print(f"🎯 DEBUG: Title: {title_text}")
         
-        new_url = URL(url=url, title=title_text)
+        default_user = User.query.filter_by(email='default@example.com').first()
+        
+        
+        new_url = URL(url=url, title=title_text, user_id=default_user.id)
         db.session.add(new_url)
         db.session.commit()  # 👈 FLUSH KI JAGAH COMMIT KARO
 
