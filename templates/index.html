@@ -12,17 +12,7 @@
             <h1>URL Manager</h1>
 			
 			
-			{% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="flash-messages">
-                        {% for category, message in messages %}
-                            <div class="flash-message flash-{{ category }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
+			
             
             <!-- Search Form -->
 			<form action="/search" method="GET" class="search-form">
