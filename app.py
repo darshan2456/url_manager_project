@@ -26,21 +26,31 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # ✅ MODELS (TERA EXISTING CODE - BILKUL SAME)
+class User(db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(200), nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.now())
+
+# ✅ URL MODEL (WITH USER_ID)
 class URL(db.Model):
-    __tablename__='url'
+    __tablename__ = 'url'
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(500))
     title = db.Column(db.String(200))
     is_archived = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # ✅ FOREIGN KEY
+    created_at = db.Column(db.DateTime, default=db.func.now())
 
 class Tag(db.Model):
-    __tablename__='tag'
+    __tablename__ = 'tag'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
     color = db.Column(db.String(7))
 
 class URLTag(db.Model):
-    __tablename__='urltag'
+    __tablename__ = 'urltag'
     id = db.Column(db.Integer, primary_key=True)
     url_id = db.Column(db.Integer, db.ForeignKey('url.id'))
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))

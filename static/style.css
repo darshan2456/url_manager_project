@@ -448,27 +448,3 @@ button {
 }
 
 
-/* ✅ FLASH MESSAGES STYLES - CSS FILE KE END MEIN ADD KARNA */
-.flash-messages {
-    margin: 15px 0;
-}
-
-.flash-message {
-    padding: 12px 15px;
-    border-radius: 5px;
-    margin: 5px 0;
-    font-weight: 500;
-    border: 1px solid;
-}
-
-.flash-success {
-    background: #D1FAE5;
-    color: #065F46;
-    border-color: #A7F3D0;
-}
-
-.flash-error {
-    background: #FEE2E2;
-    color: #991B1B;
-    border-color: #FECACA;
-}
